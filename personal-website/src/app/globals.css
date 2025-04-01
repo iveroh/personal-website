@@ -14,4 +14,6 @@ body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+
+  transition: background 0.4s ease, color 0.4s ease;
 }
