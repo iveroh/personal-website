@@ -21,7 +21,7 @@ export default function ThemeSwitch() {
         onClick={() => {
           setTheme(resolvedTheme === "dark" ? "light" : "dark");
         }}
-        className="p-2 rounded-lg bg-transparent hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+        className="p-2 rounded-lg bg-transparent hover:bg-gray-200 dark:hover:bg-gray-400 transition-colors"
       >
         <AnimatePresence mode="wait">
           <motion.div

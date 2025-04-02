@@ -20,32 +20,30 @@ export default function HeroSection() {
         <motion.h1
           className="text-5xl font-bold mb-4"
           initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: false, amount: 0.7 }}
-
+          viewport={{ once: false, amount: 0.9 }}
         >
           Hi, I'm Iver 👋
         </motion.h1>
 
         <motion.p
-          className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-xl"
+          className="text-xl mb-8 max-w-xl"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
           viewport={{ once: false, amount: 0.7 }}
-
         >
-          I create software, build things on the web, and love exploring new technology.
+          I create software, build things on the web, and love exploring new
+          technology.
         </motion.p>
 
         <motion.div
           className="flex flex-wrap justify-center md:justify-start gap-4"
           initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
           viewport={{ once: false, amount: 0.7 }}
-
         >
           <a
             href="/projects"
@@ -59,21 +57,6 @@ export default function HeroSection() {
           >
             About Me
           </a>
-          {user ? (
-            <button
-              onClick={handleLogout}
-              className="bg-black text-white dark:bg-white dark:text-black px-6 py-3 rounded-2xl font-medium shadow-md hover:scale-105 transition"
-            >
-              Logout
-            </button>
-          ) : (
-            <a
-              href="/login"
-              className="bg-black text-white dark:bg-white dark:text-black px-6 py-3 rounded-2xl font-medium shadow-md hover:scale-105 transition"
-            >
-              Login
-            </a>
-          )}
         </motion.div>
       </div>
 
@@ -81,10 +64,9 @@ export default function HeroSection() {
       <motion.div
         className="w-48 h-48 md:w-64 md:h-64 relative rounded-full overflow-hidden shadow-lg"
         initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
         viewport={{ once: false, amount: 0.5 }}
-
       >
         <Image
           src="/creator.jpg"

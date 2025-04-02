@@ -15,7 +15,7 @@ export default function Footer() {
             href="https://github.com/iveroh"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-black dark:hover:text-white transition cursor-pointer"
+            className="hover:text-purple-400 transition cursor-pointer"
           >
             <Github />
           </a>
