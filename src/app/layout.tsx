@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IOH | Home",
+  title: "",
   description: "My personal website.",
   icons: {
     icon: "/favicon.ico",

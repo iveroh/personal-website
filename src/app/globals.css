@@ -2,11 +2,11 @@
 
 :root {
   --color-background: #ffffff;
-  --color-foreground: #171717;
+  --color-foreground: var(--color-black);
 }
 
 html.dark {
-  --color-background: #0a0a0a;
+  --color-background: var(--color-black);
   --color-foreground: #ededed;
 }
 
@@ -14,6 +14,4 @@ body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans, Arial, Helvetica, sans-serif);
-
-  transition: background 0.4s ease, color 0.4s ease;
 }
