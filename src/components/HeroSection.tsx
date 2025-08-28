@@ -2,16 +2,21 @@
 
 import { useState } from "react";
 
-export default function Example() {
+import ScrollDownArrow from "@/components/ScrollDownArrow"
+
+export default function HeroSection() {
   return (
     <section className="bg-cyan-950 h-screen relative overflow-hidden">
-      {/* Background left - Dark section */}
+      
+      {/* Background left */}
       <div className="absolute inset-0 bg-gray-900 z-10 [clip-path:polygon(0%_0%,60%_0%,40%_100%,0%_100%)] md:[clip-path:polygon(0%_0%,60%_0%,40%_100%,0%_100%)]" />
 
       {/* Background right - Animated tech section */}
       <div className="absolute inset-0 z-0 bg-gradient-to-br from-slate-600 via-blue-700 to-slate-800 [clip-path:polygon(60%_0%,100%_0%,100%_100%,40%_100%)] md:[clip-path:polygon(60%_0%,100%_0%,100%_100%,40%_100%)]">
+        
         {/* Animated background */}
         <div className="absolute inset-0 overflow-hidden">
+          
           {/* Moving grid overlay */}
           <div
             className="absolute inset-0 opacity-25"
@@ -21,7 +26,7 @@ export default function Example() {
           linear-gradient(90deg, rgba(147, 197, 253, 0.4) 1px, transparent 1px)
         `,
               backgroundSize: "40px 40px",
-              animation: "gridMoveComplex 18s linear infinite", // raskere
+              animation: "gridMoveComplex 18s linear infinite",
               willChange: "transform",
             }}
           />
@@ -35,21 +40,21 @@ export default function Example() {
           linear-gradient(-45deg, rgba(147, 197, 253, 0.3) 1px, transparent 1px)
         `,
               backgroundSize: "60px 60px",
-              animation: "gridMoveDiagonal 14s linear infinite reverse", // raskere
+              animation: "gridMoveDiagonal 14s linear infinite reverse",
               willChange: "transform",
             }}
           />
 
-          {/* ---------- NEW: Tiny fading dots layer ---------- */}
+          {/* Tiny fading dots layer */}
           {[...Array(60)].map((_, i) => {
-            const size = 3 + (i % 2); // 2-3px små sirkler
-            const left = (i * 17) % 100; // jevn spredning
+            const size = 3 + (i % 2); // pixel size
+            const left = (i * 17) % 100; // spread
             const top = (i * 29) % 100;
-            const drift = 30 + (i % 20); // hvor langt de driver
-            const dur = 6 + (i % 5); // 6-10s
+            const drift = 30 + (i % 20); // distance
+            const dur = 6 + (i % 5); // life duration
             const delay = (i * 0.37) % 8;
 
-            // varier retning litt
+            // direction adjustments
             const dirX = i % 2 === 0 ? 1 : -1;
             const dirY = i % 3 === 0 ? -1 : 1;
 
@@ -64,7 +69,7 @@ export default function Example() {
                   top: `${top}%`,
                   filter: "drop-shadow(0 0 2px rgba(147,197,253,0.65))",
                   animation: `dotDrift ${dur}s ease-in-out ${delay}s infinite, dotFade ${dur}s ease-in-out ${delay}s infinite`,
-                  // Custom properties for retning/styrke
+
                   ["--dx" as any]: `${dirX * drift}px`,
                   ["--dy" as any]: `${dirY * drift}px`,
                   willChange: "transform, opacity",
@@ -72,9 +77,9 @@ export default function Example() {
               />
             );
           })}
-          {/* ---------- END tiny dots ---------- */}
+          {/* Dots death*/}
 
-          {/* Multi-directional particles with connecting lines */}
+          {/* Particles with connecting lines */}
           {[...Array(12)].map((_, i) => {
             const leftPos = 20 + ((i * 7) % 60);
             const topPos = 20 + ((i * 11) % 60);
@@ -86,7 +91,6 @@ export default function Example() {
 
             return (
               <div key={`particle-${i}`} className="absolute">
-                {/* Main particle (gjør den litt mindre for “punkt”-følelse) */}
                 <div
                   className="absolute rounded-full bg-blue-300 opacity-90 shadow-lg shadow-blue-400/50"
                   style={{
@@ -96,12 +100,12 @@ export default function Example() {
                     top: `${topPos}%`,
                     animation: `floatMulti${i % 4} ${
                       4.5 + (i % 4)
-                    }s ease-in-out ${animationDelay}s infinite`, // raskere
+                    }s ease-in-out ${animationDelay}s infinite`,
                     willChange: "transform, opacity",
                   }}
                 />
 
-                {/* Connecting lines (raskere) */}
+                {/* Connecting lines */}
                 <div
                   className="absolute bg-gradient-to-r from-blue-300 via-blue-200 to-transparent opacity-30"
                   style={{
@@ -112,7 +116,7 @@ export default function Example() {
                     transformOrigin: "left center",
                     animation: `lineConnect${i % 3} ${
                       4 + (i % 6)
-                    }s ease-in-out ${lineAnimationDelay}s infinite`, // halvert ca.
+                    }s ease-in-out ${lineAnimationDelay}s infinite`,
                     willChange: "transform, opacity",
                   }}
                 />
@@ -129,7 +133,7 @@ export default function Example() {
                       transformOrigin: "right center",
                       animation: `lineConnect${(i + 1) % 3} ${
                         5 + (i % 8)
-                      }s ease-in-out ${(i * 0.9) % 6}s infinite`, // raskere
+                      }s ease-in-out ${(i * 0.9) % 6}s infinite`,
                       willChange: "transform, opacity",
                     }}
                   />
@@ -156,14 +160,14 @@ export default function Example() {
                   top: `${topPos}%`,
                   animation: `orbit${i % 2} ${
                     8 + (i % 6)
-                  }s linear ${animationDelay}s infinite`, // litt raskere
+                  }s linear ${animationDelay}s infinite`,
                   willChange: "transform, opacity",
                 }}
               />
             );
           })}
 
-          {/* Flowing waves - fortsatt rolig, men litt raskere */}
+          {/* Flowing waves */}
           {[...Array(4)].map((_, i) => {
             const animationDelay = (i * 1.5) % 6;
 
@@ -177,7 +181,7 @@ export default function Example() {
                   top: `${20 + i * 20}%`,
                   animation: `wave${i % 3} ${
                     9 + (i % 6)
-                  }s ease-in-out ${animationDelay}s infinite`, // raskere
+                  }s ease-in-out ${animationDelay}s infinite`,
                   willChange: "transform, opacity",
                 }}
               />
@@ -187,9 +191,9 @@ export default function Example() {
 
         {/* CSS animations */}
         <style jsx>{`
-          /* existing keyframes (noen gjort raskere via varighet over) */
+          /* existing keyframes */
 
-          /* NEW: tiny dot drift & fade */
+          /* tiny dot drift & fade */
           @keyframes dotDrift {
             0% {
               transform: translate(0, 0) scale(1);
@@ -416,6 +420,7 @@ export default function Example() {
 
       {/* Main content grid */}
       <div className="relative z-20 h-screen grid grid-cols-1 md:grid-cols-2">
+        
         {/* Left side - Description */}
         <div className="flex items-center justify-center text-white px-4">
           <div className="text-center max-w-lg">
@@ -423,7 +428,8 @@ export default function Example() {
               Selvstendig IT-konsulent
             </h1>
             <p className="text-lg md:text-xl mb-8 font-bold">
-              Enkle, effektive og pålitelige IT-løsninger
+              Enkle, effektive og pålitelige IT-løsninger <br />
+              Ingen mellomledd
             </p>
 
             {/* Buttons */}
@@ -436,7 +442,7 @@ export default function Example() {
               </a>
               <a
                 href=""
-                className="text-white px-6 py-3 rounded-full text-base font-semibold hover:text-black transition duration-300 border border-white hover:bg-white hover:text-black"
+                className="text-white px-6 py-3 text-base font-semibold hover:underline hover:text-lg transition-text duration-300"
               >
                 Lær mer →
               </a>
@@ -455,6 +461,7 @@ export default function Example() {
           </a>
         </div>
       </div>
+      <ScrollDownArrow />
     </section>
   );
 }

@@ -4,7 +4,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 const navigation = [
   { name: 'Hjem', href: '#', current: true },
   { name: 'Om meg', href: '#', current: false },
-  { name: 'Prosjekter', href: '#', current: false },
+  { name: 'Portefølje', href: '#', current: false },
 ]
 
 function classNames(...classes: (string | false | null | undefined)[]) {
@@ -34,7 +34,7 @@ export default function StickyNavbar() {
           </div>
 
           {/* Left side: Logo + Nav links */}
-          <div className="flex flex-1 items-center sm:items-stretch sm:justify-start">
+          <div className="flex flex-1 items-center justify-center sm:justify-start sm:items-stretch">
             <div className="flex shrink-0 items-center">
               <img
                 alt="Your Company"
