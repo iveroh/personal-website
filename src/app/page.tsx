@@ -12,6 +12,7 @@ export default function Homepage() {
   return (
     <div className="relative">
       <HeroSection />
+      <StickyNavbar currentPage="home"/>
       <PlanSection />
       <Footer />
     </div>

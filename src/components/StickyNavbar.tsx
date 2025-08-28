@@ -2,9 +2,10 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'Hjem', href: '#', current: true },
-  { name: 'Om meg', href: '#', current: false },
-  { name: 'Portefølje', href: '#', current: false },
+  { name: 'Hjem', href: '/', key: 'home' },
+  { name: 'Produkt', href: '/produkt', key: 'product' },
+  { name: 'Om meg', href: '/about', key: 'about' },
+  { name: 'Portefølje', href: '/portfolio', key: 'portfolio' },
 ]
 
 function classNames(...classes: (string | false | null | undefined)[]) {
@@ -16,7 +17,11 @@ const navBtnBase =
 const navBtnActive = "bg-gray-950/50 text-white"
 const navBtnIdle   = "text-gray-300 hover:bg-white/5 hover:text-white"
 
-export default function StickyNavbar() {
+interface StickyNavbarProps {
+  currentPage?: string;
+}
+
+export default function StickyNavbar({ currentPage }: StickyNavbarProps) {
   return (
     <Disclosure
       as="nav"
@@ -45,19 +50,22 @@ export default function StickyNavbar() {
 
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex items-center gap-2">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
-                    className={classNames(
-                      navBtnBase,
-                      item.current ? navBtnActive : navBtnIdle
-                    )}
-                  >
-                    {item.name}
-                  </a>
-                ))}
+                {navigation.map((item) => {
+                  const isCurrent = currentPage === item.key;
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      aria-current={isCurrent ? 'page' : undefined}
+                      className={classNames(
+                        navBtnBase,
+                        isCurrent ? navBtnActive : navBtnIdle
+                      )}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -77,21 +85,24 @@ export default function StickyNavbar() {
       {/* Mobile panel */}
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">
-          {navigation.map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as="a"
-              href={item.href}
-              aria-current={item.current ? 'page' : undefined}
-              className={classNames(
-                navBtnBase,
-                "w-full justify-start",
-                item.current ? navBtnActive : navBtnIdle
-              )}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
+          {navigation.map((item) => {
+            const isCurrent = currentPage === item.key;
+            return (
+              <DisclosureButton
+                key={item.name}
+                as="a"
+                href={item.href}
+                aria-current={isCurrent ? 'page' : undefined}
+                className={classNames(
+                  navBtnBase,
+                  "w-full justify-start",
+                  isCurrent ? navBtnActive : navBtnIdle
+                )}
+              >
+                {item.name}
+              </DisclosureButton>
+            );
+          })}
 
           {/* Mobile Kontakt */}
           <DisclosureButton

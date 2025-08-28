@@ -452,7 +452,7 @@ export default function HeroSection() {
 
         {/* Right side - Photo */}
         <div className="flex items-center justify-center px-4">
-          <a href="#">
+          <a href="about">
           <img
             className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 object-cover rounded-full border-4 border-white shadow-2xl transition-transform duration-300 ease-in-out hover:scale-105"
             src="creator.jpg"

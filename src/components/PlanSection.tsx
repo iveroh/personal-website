@@ -1,5 +1,4 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import Navbar from "@/components/StickyNavbar";
 
 const tiers = [
   {
@@ -42,7 +41,6 @@ function classNames(...classes: string[]) {
 export default function PlanSection() {
   return (
     <section>
-      <Navbar />
       <div className="relative isolate bg-gray-900 px-6 py-24 sm:py-32 lg:px-8">
         <div
           aria-hidden="true"
