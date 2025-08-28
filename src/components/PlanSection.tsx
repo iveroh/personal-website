@@ -21,7 +21,8 @@ const tiers = [
     id: "tier-enterprise",
     href: "#",
     priceMonthly: "500 kr",
-    description: "Skreddersydde løsninger som hjelper virksomheten din å fremstå profesjonell og jobbe mer effektivt.",
+    description:
+      "Skreddersydde løsninger som hjelper virksomheten din å fremstå profesjonell og jobbe mer effektivt.",
     features: [
       "Profesjonell bedriftsnettside",
       "Integrasjoner med systemer og verktøy",

@@ -2,21 +2,18 @@
 
 import { useState } from "react";
 
-import ScrollDownArrow from "@/components/ScrollDownArrow"
+import ScrollDownArrow from "@/components/ScrollDownArrow";
 
 export default function HeroSection() {
   return (
     <section className="bg-cyan-950 h-screen relative overflow-hidden">
-      
       {/* Background left */}
       <div className="absolute inset-0 bg-gray-900 z-10 [clip-path:polygon(0%_0%,60%_0%,40%_100%,0%_100%)] md:[clip-path:polygon(0%_0%,60%_0%,40%_100%,0%_100%)]" />
 
       {/* Background right - Animated tech section */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-slate-600 via-blue-700 to-slate-800 [clip-path:polygon(60%_0%,100%_0%,100%_100%,40%_100%)] md:[clip-path:polygon(60%_0%,100%_0%,100%_100%,40%_100%)]">
-        
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-sky-950 via-blue-900 to-blue-950 [clip-path:polygon(60%_0%,100%_0%,100%_100%,40%_100%)] md:[clip-path:polygon(60%_0%,100%_0%,100%_100%,40%_100%)]">
         {/* Animated background */}
         <div className="absolute inset-0 overflow-hidden">
-          
           {/* Moving grid overlay */}
           <div
             className="absolute inset-0 opacity-25"
@@ -420,7 +417,6 @@ export default function HeroSection() {
 
       {/* Main content grid */}
       <div className="relative z-20 h-screen grid grid-cols-1 md:grid-cols-2">
-        
         {/* Left side - Description */}
         <div className="flex items-center justify-center text-white px-4">
           <div className="text-center max-w-lg">
@@ -453,11 +449,11 @@ export default function HeroSection() {
         {/* Right side - Photo */}
         <div className="flex items-center justify-center px-4">
           <a href="about">
-          <img
-            className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 object-cover rounded-full border-4 border-white shadow-2xl transition-transform duration-300 ease-in-out hover:scale-105"
-            src="creator.jpg"
-            alt="Creator"
-          />
+            <img
+              className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 object-cover rounded-full border-4 border-white shadow-2xl transition-transform duration-300 ease-in-out hover:scale-105"
+              src="creator.jpg"
+              alt="Creator"
+            />
           </a>
         </div>
       </div>
