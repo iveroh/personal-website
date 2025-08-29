@@ -421,7 +421,8 @@ export default function HeroSection() {
         <div className="flex items-center justify-center text-white px-4">
           <div className="text-center max-w-lg">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              Selvstendig IT-konsulent
+              Selvstendig <br />
+              IT-konsulent
             </h1>
             <p className="text-lg md:text-xl mb-8 font-bold">
               Enkle, effektive og pålitelige IT-løsninger <br />
