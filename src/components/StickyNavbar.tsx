@@ -41,11 +41,13 @@ export default function StickyNavbar({ currentPage }: StickyNavbarProps) {
           {/* Left side: Logo + Nav links */}
           <div className="flex flex-1 items-center justify-center sm:justify-start sm:items-stretch">
             <div className="flex shrink-0 items-center">
+              <a href="/">
               <img
                 alt="Your Company"
                 src="logo-white.png"
                 className="h-8 w-auto"
               />
+              </a>
             </div>
 
             <div className="hidden sm:ml-6 sm:block">
@@ -73,7 +75,7 @@ export default function StickyNavbar({ currentPage }: StickyNavbarProps) {
           {/* Right side: Kontakt button */}
           <div className="flex items-center">
             <a
-              href="#kontakt"
+              href="contact"
               className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
             >
               Kontakt →

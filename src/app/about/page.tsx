@@ -15,7 +15,6 @@ export default function About() {
 
         {/* Full screen animated background */}
         <div className="absolute inset-0 overflow-hidden">
-        
           {/* Moving grid overlay */}
           <div
             className="absolute inset-0 opacity-25"
@@ -192,20 +191,29 @@ export default function About() {
           {/* Left: headline + description */}
           <div className="text-white max-w-xl">
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              Heisann, Iver her
+              Iver Oprand Heggelund
             </h1>
-            <p className="text-lg md:text-xl leading-relaxed text-blue-100/90">
+
+            <p className="text-lg md:text-xl leading-relaxed text-blue-100/90 mb-4">
               Jeg er en 22 år gammel student fra Tromsø. Akkurat nå er jeg på
-              mitt siste år på bachelor i informatikk ved NTNU. <br />
-              <StudyProgress />
+              mitt siste år på bachelor i informatikk ved NTNU.
+            </p>
+
+            <StudyProgress />
+
+            <p className="text-lg md:text-xl leading-relaxed text-blue-100/90 mb-4">
               Gjennom studiet har jeg opparbeidet meg solid kompetanse innen
               webutvikling, programmering og systemdesign, og jeg brenner for å
-              finne løsninger som er både brukervennlige og effektive. <br />
-              <br />
+              finne løsninger som er både brukervennlige og effektive.
+            </p>
+
+            <p className="text-lg md:text-xl leading-relaxed text-blue-100/90 mb-4">
               Ved siden av studiene har jeg jobbet med flere prosjekter – både
               egne og for andre – hvor jeg har fått erfaring med moderne
-              teknologier og reelle problemstillinger. <br />
-              <br />
+              teknologier og reelle problemstillinger.
+            </p>
+
+            <p className="text-lg md:text-xl leading-relaxed text-blue-100/90">
               Som selvstendig IT-konsulent ønsker jeg å hjelpe både
               privatpersoner og bedrifter med å skape gode digitale løsninger.
             </p>
@@ -220,7 +228,7 @@ export default function About() {
                 { src: "mountain.jpg", alt: "mountain" },
                 { src: "hobby2.jpg", alt: "hobby 2" },
                 { src: "creator5.jpg", alt: "creator 2" },
-                { src: "coffe.jpg", alt: "coffe" }
+                { src: "coffe.jpg", alt: "coffe" },
               ]}
               // columnsClass="columns-1 sm:columns-2 xl:columns-3" // tweak if you like
               // cropHeights={false} // set to false if you want natural heights (no cropping)

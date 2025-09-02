@@ -1,27 +1,71 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
+import emailjs from "@emailjs/browser";
+import StickyNavbar from "@/components/StickyNavbar";
 
-import ScrollDownArrow from "@/components/ScrollDownArrow";
+function ContactForm() {
+  const [userInput, setUserInput] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-export default function HeroSection() {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setUserInput(prev => ({ ...prev, [name]: value }));
+    if (sent) setSent(false);
+    if (errorMsg) setErrorMsg(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (sending) return;
+    setSending(true);
+    setSent(false);
+    setErrorMsg(null);
+
+    const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+    const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+    const userID = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+
+    try {
+      const res = await emailjs.send(serviceID, templateID, userInput, userID);
+
+      if (res.status === 200) {
+        // 1) show toast
+        toast.success("Meldingen ble sendt!");
+        // 2) clear the form
+        setUserInput({ name: "", email: "", message: "" });
+        // 3) show inline success message
+        setSent(true);
+        // auto-hide after a few seconds
+        setTimeout(() => setSent(false), 6000);
+      } else {
+        throw new Error("EmailJS returned a non-200 status");
+      }
+    } catch (err) {
+      setErrorMsg("Kunne ikke sende meldingen. Prøv igjen senere.");
+      toast.error("Failed to send message. Please try again later.");
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
-    <section className="bg-cyan-950 h-screen relative overflow-hidden">
-      {/* Background left */}
-      <div className="absolute inset-0 bg-gray-900 z-10 [clip-path:polygon(0%_0%,60%_0%,40%_100%,0%_100%)] md:[clip-path:polygon(0%_0%,60%_0%,40%_100%,0%_100%)]" />
-
-      {/* Background right - Animated tech section */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-sky-950 via-blue-900 to-blue-950 [clip-path:polygon(60%_0%,100%_0%,100%_100%,40%_100%)] md:[clip-path:polygon(60%_0%,100%_0%,100%_100%,40%_100%)]">
-        {/* Animated background */}
+    <section>
+      <StickyNavbar />
+      <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-sky-950 via-blue-900 to-blue-950">
+        {/* Full screen animated background */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Moving grid overlay */}
           <div
             className="absolute inset-0 opacity-25"
             style={{
               backgroundImage: `
-          linear-gradient(rgba(147, 197, 253, 0.4) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(147, 197, 253, 0.4) 1px, transparent 1px)
-        `,
+                linear-gradient(rgba(147, 197, 253, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(147, 197, 253, 0.4) 1px, transparent 1px)
+              `,
               backgroundSize: "40px 40px",
               animation: "gridMoveComplex 18s linear infinite",
               willChange: "transform",
@@ -33,9 +77,9 @@ export default function HeroSection() {
             className="absolute inset-0 opacity-15"
             style={{
               backgroundImage: `
-          linear-gradient(45deg, rgba(147, 197, 253, 0.3) 1px, transparent 1px),
-          linear-gradient(-45deg, rgba(147, 197, 253, 0.3) 1px, transparent 1px)
-        `,
+                linear-gradient(45deg, rgba(147, 197, 253, 0.3) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(147, 197, 253, 0.3) 1px, transparent 1px)
+              `,
               backgroundSize: "60px 60px",
               animation: "gridMoveDiagonal 14s linear infinite reverse",
               willChange: "transform",
@@ -46,7 +90,7 @@ export default function HeroSection() {
           {[...Array(60)].map((_, i) => {
             const size = 3 + (i % 2); // pixel size
             const left = (i * 17) % 100; // spread
-            const top = (i * 29) % 100;
+            const top = (i * 29) % 100; // spread
             const drift = 30 + (i % 20); // distance
             const dur = 6 + (i % 5); // life duration
             const delay = (i * 0.37) % 8;
@@ -74,7 +118,6 @@ export default function HeroSection() {
               />
             );
           })}
-          {/* Dots death*/}
 
           {/* Particles with connecting lines */}
           {[...Array(12)].map((_, i) => {
@@ -186,37 +229,90 @@ export default function HeroSection() {
           })}
         </div>
 
-        {/* CSS animations */}
+        <div className="relative z-10 min-h-screen grid place-items-center px-4">
+          <form
+            onSubmit={handleSubmit}
+            className="max-w-lg w-full mx-auto p-6 bg-slate-800/90 backdrop-blur rounded-2xl shadow-lg space-y-6"
+          >
+            {/* Inline success / error message */}
+            <div aria-live="polite" aria-atomic="true">
+              {sent && (
+                <div className="mb-2 rounded-xl border border-green-400/40 bg-green-500/10 text-green-200 px-4 py-2 text-sm">
+                  ✅ Meldingen er sendt! Jeg tar kontakt så snart som mulig.
+                </div>
+              )}
+              {errorMsg && (
+                <div className="mb-2 rounded-xl border border-red-400/40 bg-red-500/10 text-red-200 px-4 py-2 text-sm">
+                  ⚠️ {errorMsg}
+                </div>
+              )}
+            </div>
+
+            {/* Name */}
+            <div className="flex flex-col">
+              <label className="mb-1 text-sm font-semibold text-blue-200">
+                Navn/Bedrift
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={userInput.name}
+                onChange={handleChange}
+                required
+                disabled={sending}
+                className="px-4 py-2 rounded-xl bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition disabled:opacity-60"
+                placeholder="Skriv navnet ditt"
+              />
+            </div>
+
+            {/* Email */}
+            <div className="flex flex-col">
+              <label className="mb-1 text-sm font-semibold text-blue-200">
+                E-post
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={userInput.email}
+                onChange={handleChange}
+                required
+                disabled={sending}
+                className="px-4 py-2 rounded-xl bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition disabled:opacity-60"
+                placeholder="din@epost.no"
+              />
+            </div>
+
+            {/* Message */}
+            <div className="flex flex-col">
+              <label className="mb-1 text-sm font-semibold text-blue-200">
+                Beskrivelse
+              </label>
+              <textarea
+                name="message"
+                value={userInput.message}
+                onChange={handleChange}
+                required
+                rows={5}
+                disabled={sending}
+                className="px-4 py-2 rounded-xl bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition resize-none disabled:opacity-60"
+                placeholder="Hva kan jeg hjelpe deg med?"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={sending}
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-md hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {sending ? "Sender..." : "Send melding"}
+            </button>
+          </form>
+        </div>
+
+        {/* CSS animations - same as HeroSection */}
         <style jsx>{`
-          /* existing keyframes */
-
-          /* tiny dot drift & fade */
-          @keyframes dotDrift {
-            0% {
-              transform: translate(0, 0) scale(1);
-            }
-            50% {
-              transform: translate(var(--dx), var(--dy)) scale(1.05);
-            }
-            100% {
-              transform: translate(0, 0) scale(1);
-            }
-          }
-          @keyframes dotFade {
-            0% {
-              opacity: 0;
-            }
-            10% {
-              opacity: 0.9;
-            }
-            70% {
-              opacity: 0.9;
-            }
-            100% {
-              opacity: 0;
-            } /* forsvinner */
-          }
-
+          /* Grid animations */
           @keyframes gridMoveComplex {
             0% {
               transform: translate(0, 0) rotate(0deg);
@@ -247,6 +343,35 @@ export default function HeroSection() {
             }
           }
 
+          /* Dot animations */
+          @keyframes dotDrift {
+            0% {
+              transform: translate(0, 0) scale(1);
+            }
+            50% {
+              transform: translate(var(--dx), var(--dy)) scale(1.05);
+            }
+            100% {
+              transform: translate(0, 0) scale(1);
+            }
+          }
+
+          @keyframes dotFade {
+            0% {
+              opacity: 0;
+            }
+            10% {
+              opacity: 0.9;
+            }
+            70% {
+              opacity: 0.9;
+            }
+            100% {
+              opacity: 0;
+            }
+          }
+
+          /* Particle animations */
           @keyframes floatMulti0 {
             0%,
             100% {
@@ -266,6 +391,7 @@ export default function HeroSection() {
               opacity: 1;
             }
           }
+
           @keyframes floatMulti1 {
             0%,
             100% {
@@ -281,6 +407,7 @@ export default function HeroSection() {
               opacity: 0.8;
             }
           }
+
           @keyframes floatMulti2 {
             0%,
             100% {
@@ -292,6 +419,7 @@ export default function HeroSection() {
               opacity: 1;
             }
           }
+
           @keyframes floatMulti3 {
             0%,
             100% {
@@ -308,6 +436,7 @@ export default function HeroSection() {
             }
           }
 
+          /* Line animations */
           @keyframes lineConnect0 {
             0%,
             100% {
@@ -327,6 +456,7 @@ export default function HeroSection() {
               transform: rotate(45deg) scaleX(1.1);
             }
           }
+
           @keyframes lineConnect1 {
             0%,
             100% {
@@ -342,6 +472,7 @@ export default function HeroSection() {
               transform: rotate(20deg) translateX(-10px);
             }
           }
+
           @keyframes lineConnect2 {
             0%,
             100% {
@@ -354,6 +485,7 @@ export default function HeroSection() {
             }
           }
 
+          /* Orbit animations */
           @keyframes orbit0 {
             0% {
               transform: rotate(0deg) translateX(25px) rotate(0deg);
@@ -362,6 +494,7 @@ export default function HeroSection() {
               transform: rotate(360deg) translateX(25px) rotate(-360deg);
             }
           }
+
           @keyframes orbit1 {
             0% {
               transform: rotate(0deg) translateX(40px) rotate(0deg) scale(1);
@@ -376,6 +509,7 @@ export default function HeroSection() {
             }
           }
 
+          /* Wave animations */
           @keyframes wave0 {
             0%,
             100% {
@@ -387,6 +521,7 @@ export default function HeroSection() {
               opacity: 0.25;
             }
           }
+
           @keyframes wave1 {
             0%,
             100% {
@@ -398,6 +533,7 @@ export default function HeroSection() {
               opacity: 0.3;
             }
           }
+
           @keyframes wave2 {
             0%,
             100% {
@@ -411,54 +547,8 @@ export default function HeroSection() {
           }
         `}</style>
       </div>
-
-      {/* White diagonal line separator */}
-      <div className="absolute inset-0 z-15 bg-white [clip-path:polygon(59.5%_0%,60.5%_0%,40.5%_100%,39.5%_100%)] md:[clip-path:polygon(59.5%_0%,60.5%_0%,40.5%_100%,39.5%_100%)]" />
-
-      {/* Main content grid */}
-      <div className="relative z-20 h-screen grid grid-cols-1 md:grid-cols-2">
-        {/* Left side - Description */}
-        <div className="flex items-center justify-center text-white px-4">
-          <div className="text-center max-w-lg">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              Selvstendig <br />
-              IT-konsulent
-            </h1>
-            <p className="text-lg md:text-xl mb-8 font-bold">
-              Enkle, effektive og pålitelige IT-løsninger <br />
-              Ingen mellomledd
-            </p>
-
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a
-                href="contact"
-                className="bg-white text-black px-6 py-3 rounded-full text-base font-semibold hover:bg-gray-300 transition duration-300"
-              >
-                Kontakt
-              </a>
-              <a
-                href=""
-                className="text-white px-6 py-3 text-base font-semibold hover:underline hover:text-lg transition-text duration-300"
-              >
-                Lær mer →
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Right side - Photo */}
-        <div className="flex items-center justify-center px-4">
-          <a href="about">
-            <img
-              className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 object-cover rounded-full border-4 border-white shadow-2xl transition-transform duration-300 ease-in-out hover:scale-105"
-              src="creator.jpg"
-              alt="Creator"
-            />
-          </a>
-        </div>
-      </div>
-      <ScrollDownArrow />
     </section>
   );
 }
+
+export default ContactForm;

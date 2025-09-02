@@ -14,6 +14,7 @@ const totalYears = [
 export default function StudyProgress() {
   return (
     <div className="mt-4 mb-4 flex flex-col items-center">
+      
       {/* Top: Category Labels */}
       <div className="flex justify-center w-full mb-4">
         <div className="flex w-[calc(100%-4rem)] justify-between">
@@ -30,24 +31,25 @@ export default function StudyProgress() {
       <div className="flex items-center justify-center">
         {totalYears.map((year, index) => (
           <div key={index} className="flex items-center">
+
             {/* Circle */}
             <div
               className={clsx(
                 "w-8 h-8 rounded-full flex items-center justify-center border-2 z-10",
                 {
-                  "bg-cyan-400 text-white border-cyan-500":
+                  "bg-sky-600 text-white border-sky-700":
                     year.status === "completed",
-                  "border-cyan-500 text-cyan-500": year.status === "current",
+                  "border-sky-700 text-sky-600": year.status === "current",
                   "border-white text-gray-300": year.status === "upcoming",
                 }
               )}
             >
               {year.status === "completed" && (
-                <Check size={16} color="oklch(30.2% 0.056 229.695)" />
+                <Check size={16} color="oklch(1.3155 0 0)" />
               )}
               {year.status === "current" && (
                 <div className="relative">
-                  <div className="absolute w-2 h-2 rounded-full bg-cyan-600 animate-pulse" />
+                  <div className="absolute w-2 h-2 rounded-full bg-sky-700 animate-pulse" />
                   <div className="w-2 h-2 bg-white rounded-full z-10" />
                 </div>
               )}
@@ -57,7 +59,7 @@ export default function StudyProgress() {
             {index < totalYears.length - 1 && (
               <div
                 className={clsx("h-0.5 w-12", {
-                  "bg-cyan-500": totalYears[index + 1].status !== "upcoming",
+                  "bg-sky-700": totalYears[index + 1].status !== "upcoming",
                   "bg-white": totalYears[index + 1].status === "upcoming",
                 })}
               />
